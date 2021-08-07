@@ -33,6 +33,7 @@
 
 #include "TinyJS.h"
 #include "TinyJS_Functions.h"
+#include "TinyJS_MathFunctions.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -47,7 +48,8 @@ void js_print(TinyJS::Variable *v, void *userdata) {
 }
 
 void js_dump(TinyJS::Variable *v, void *userdata) {
-    CTinyJS *js = (CTinyJS*)userdata;
+    //CTinyJS *js = (CTinyJS*)userdata;
+    TinyJS::Interpreter *js = (TinyJS::Interpreter*)userdata;
     js->root->trace(">  ");
 }
 
@@ -56,6 +58,7 @@ int main(int argc, char **argv)
   TinyJS::Interpreter *js = new TinyJS::Interpreter();
   /* add the functions from TinyJS_Functions.cpp */
   TinyJS::registerFunctions(js);
+  TinyJS::registerMathFunctions(js);
   /* Add a native function */
   js->addNative("function print(text)", &js_print, 0);
   js->addNative("function dump()", &js_dump, js);
